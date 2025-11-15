@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Supply — عبدو البحراوي</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="nav">
+    <div class="brand">Supply — <span class="owner">عبدو البحراوي</span></div>
+    <nav class="nav-right">
+      <a class="btn" href="index.html">الرئيسية</a>
+      <a class="btn" href="services.html">الخدمات</a>
+      <a class="btn gold" href="add_funds.html">إضافة أموال</a>
+      <a class="btn" href="admin.html">لوحة الأدمن</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="hero card">
+      <h1>خدمات تسويق رقمي وحملات إعلانية احترافية</h1>
+      <p class="lead">نقدّم حلول قانونية لزيادة الوصول والمتابعين عبر حملات مدفوعة، تصميم محتوى، وتعاون مع مؤثرين — تحت إدارة <strong>عبدو البحراوي</strong>.</p>
+      <div class="cta">
+        <a class="btn gold" href="services.html">اطّلع على الخدمات</a>
+        <a class="btn" href="add_funds.html">أضف رصيد الآن</a>
+      </div>
+    </section>
+
+    <section class="cards">
+      <article class="card">
+        <h3>حملات إعلانية</h3>
+        <p>إعلانات مستهدفة على فيسبوك، انستجرام، تيك توك ويوتيوب للوصول لمتابعين حقيقيين.</p>
+      </article>
+
+      <article class="card">
+        <h3>تصميم محتوى</h3>
+        <p>تصاميم ريلز، صور، فيديوهات قصيرة مهيأة للتحويل والتفاعل.</p>
+      </article>
+
+      <article class="card">
+        <h3>تحليلات وتقارير</h3>
+        <p>تقارير أسبوعية عن الأداء والتحسين المستمر للحملات.</p>
+      </article>
+    </section>
+
+    <section class="plans card">
+      <h2>باقات مبدئية</h2>
+      <div class="plan-list">
+        <div class="plan"><h4>Starter</h4><p>1,500 ج / شهر — أساسيات تحسين المحتوى</p></div>
+        <div class="plan"><h4>Growth</h4><p>4,500 ج / شهر — حملات إعلانية وتحليل</p></div>
+        <div class="plan"><h4>Pro</h4><p>10,000 ج / شهر — إدارة كاملة ومؤثرين</p></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    © <strong>Supply</strong> — عبدو البحراوي — جميع الحقوق محفوظة
+  </footer>
+</body>
+</html>

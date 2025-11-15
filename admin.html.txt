@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>لوحة الأدمن — Supply</title><link rel="stylesheet" href="styles.css"></head>
+<body>
+  <header class="nav">
+    <div class="brand">Supply — لوحة الأدمن</div>
+    <nav class="nav-right"><a class="btn" href="index.html">عرض الموقع</a></nav>
+  </header>
+
+  <main class="container">
+    <h1>طلبات شحن معلّقة</h1>
+    <section class="card">
+      <ul id="pending"></ul>
+    </section>
+
+    <section class="card">
+      <h3>تعديل رصيد يدوي</h3>
+      <label>البريد أو اسم المستخدم (تجريبي)</label>
+      <input id="userKey" placeholder="مثال: demo@example.com">
+      <label>المبلغ (موجب للإضافة، سالب للخصم)</label>
+      <input id="adjAmount" type="number">
+      <button class="btn gold" id="applyAdj">تطبيق</button>
+      <div id="adminMsg" style="margin-top:10px;color:#ddd"></div>
+    </section>
+  </main>
+
+<script>
+  const paymentsKey = 'supply_demo_payments';
+  const balanceKey = 'supply_demo_balance';
+
+  function loadPending(){
+    const list = JSON.parse(localStorage.getItem(paymentsKey)||'[]');
+    const ul = document.getElementById('pending'); ul.innerHTML='';
+    list.forEach(p=>{
+      const li = document.createElement('li');
+      li.innerHTML = `<strong>#${p.id}</strong> — ${p.amount} ج — ${p.sender} — <em>${p.status}</em>
+        <div style="margin-top:6px">
+          <button class="btn" onclick="approve(${p.id})">قبول</button>
+          <button class="btn" onclick="reject(${p.id})">رفض</button>
+        </div>`;
+      ul.appendChild(li);
+    });
+  }
+
+  function approve(id){
+    const list = JSON.parse(localStorage.getItem(paymentsKey)||'[]');
+    const idx = list.findIndex(x=>x.id===id);
+    if(idx === -1) return alert('غير موجود');
+    list[idx].status = 'مقبول';
+    localStorage.setItem(paymentsKey, JSON.stringify(list));
+    // add to demo balance
+    const bal = parseFloat(localStorage.getItem(balanceKey)||'0') + parseFloat(list[idx].amount||0);
+    localStorage.setItem(balanceKey, bal.toFixed(2));
+    loadPending();
+    alert('تم قبول الدفع — الرصيد المحدث: ' + bal.toFixed(2) + ' ج (تجريبي)');
+  }
+
+  function reject(id){
+    const list = JSON.parse(localStorage.getItem(paymentsKey)||'[]');
+    const idx = list.findIndex(x=>x.id===id);
+    if(idx === -1) return alert('غير موجود');
+    list[idx].status = 'مرفوض';
+    localStorage.setItem(paymentsKey, JSON.stringify(list));
+    loadPending();
+    alert('تم رفض الطلب');
+  }
+
+  document.getElementById('applyAdj').addEventListener('click', ()=>{
+    const email = document.getElementById('userKey').value||'demo';
+    const amt = parseFloat(document.getElementById('adjAmount').value||'0');
+    const current = parseFloat(localStorage.getItem(balanceKey)||'0');
+    const next = current + amt;
+    localStorage.setItem(balanceKey, next.toFixed(2));
+    document.getElementById('adminMsg').innerText = `تم تعديل رصيد (${email}) → الرصيد الآن: ${next.toFixed(2)} ج (تجريبي)`;
+  });
+
+  // init
+  loadPending();
+</script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>إضافة أموال — Supply</title><link rel="stylesheet" href="styles.css"></head>
+<body>
+  <header class="nav">
+    <div class="brand">Supply — عبدو البحراوي</div>
+    <nav class="nav-right"><a class="btn" href="index.html">الرئيسية</a></nav>
+  </header>
+
+  <main class="container card">
+    <h2>إضافة أموال (تجريبي)</h2>
+    <p>رقم Vodafone Cash للدفع: <strong>01023560574</strong></p>
+
+    <form id="fundForm">
+      <label>المبلغ (جنيه)</label>
+      <input id="amount" type="number" required />
+
+      <label>اسم المرسل أو رقم العملية</label>
+      <input id="sender" required />
+
+      <label>رفع إثبات الدفع (اختياري)</label>
+      <input id="receipt" type="file" accept="image/*" />
+
+      <div style="margin-top:12px"><button class="btn gold" type="submit">أرسل إثبات الدفع</button></div>
+    </form>
+
+    <div id="msg" style="margin-top:12px"></div>
+
+    <h3 style="margin-top:18px">سجل طلبات الشحن (تجريبي)</h3>
+    <ul id="payments"></ul>
+  </main>
+
+<script>
+  const paymentsKey = 'supply_demo_payments';
+  function renderPayments(){
+    const list = JSON.parse(localStorage.getItem(paymentsKey)||'[]');
+    const ul = document.getElementById('payments'); ul.innerHTML='';
+    list.forEach(p=>{
+      const li = document.createElement('li');
+      li.innerText = `#${p.id} — ${p.amount} ج — ${p.sender} — ${p.status}`;
+      ul.appendChild(li);
+    });
+  }
+  document.getElementById('fundForm').addEventListener('submit', e=>{
+    e.preventDefault();
+    const amount = parseFloat(document.getElementById('amount').value||0);
+    const sender = document.getElementById('sender').value||'غير معروف';
+    const id = Date.now();
+    const list = JSON.parse(localStorage.getItem(paymentsKey)||'[]');
+    list.unshift({ id, amount, sender, status:'قيد المراجعة', created:new Date().toISOString() });
+    localStorage.setItem(paymentsKey, JSON.stringify(list));
+    document.getElementById('msg').innerText = 'تم إرسال إثبات الدفع — انتظر مراجعة الأدمن';
+    renderPayments();
+  });
+  renderPayments();
+</script>
+</body>
+</html>
